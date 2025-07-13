@@ -1,10 +1,10 @@
 // src/pages/DashboardPage.jsx
 import React from 'react';
 import { useAuth } from '../hooks/useAuth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import '../styles/DashboardPage.css';
 
 const DashboardPage = () => {
-  // 1. Desestructura 'token' junto con 'user' y 'logout' desde el hook useAuth
   const { user, token, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -13,35 +13,63 @@ const DashboardPage = () => {
     navigate('/'); 
   };
 
-  // Si por alguna razón el token no está disponible, no mostramos nada
   if (!user || !token) {
-    return <p>Cargando datos del usuario...</p>;
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Cargando datos del usuario...</p>
+      </div>
+    );
   }
 
   return (
-    <div style={{ padding: '20px', fontFamily: 'sans-serif' }}>
-      <h1>¡Bienvenido, {user.name}!</h1>
-      <p>Has iniciado sesión correctamente y tu token ha sido generado.</p>
-      <p>Email: {user.email}</p>
-      
-      <hr />
+    <div className="dashboard-container">
+      <header className="dashboard-header">
+        <div>
+          <h1>¡Bienvenido, {user.name}!</h1>
+          <p className="user-email">{user.email}</p>
+        </div>
+        <button onClick={handleLogout} className="logout-button">
+          Cerrar Sesión
+        </button>
+      </header>
 
-      {/* 2. Muestra el token en la página */}
-      <h3>Tu Token de Autenticación:</h3>
-      <p>Este token ahora se envía automáticamente en cada petición a la API.</p>
-      <pre 
-        style={{ 
-          backgroundColor: '#f0f0f0', 
-          padding: '15px', 
-          borderRadius: '5px', 
-          wordWrap: 'break-word', // Para que el token no se salga del contenedor
-          whiteSpace: 'pre-wrap'  // Permite que el texto largo se ajuste
-        }}
-      >
-        {token}
-      </pre>
+      <div className="dashboard-content">
+        <div className="dashboard-actions">
+          <Link to="/accommodations" className="action-button primary">
+            <i className="fas fa-hotel"></i>
+            <span>Gestionar Alojamientos</span>
+          </Link>
+          
+          <Link to="/calendar" className="action-button secondary">
+            <i className="fas fa-calendar-alt"></i>
+            <span>Ver Calendario de Reservas</span>
+          </Link>
+        </div>
+        
+        <div className="dashboard-card">
+          <h2>Bienvenido al Panel de Control</h2>
+          <p>Selecciona una opción del menú para comenzar a gestionar tus alojamientos o ver el calendario de reservas.</p>
+        </div>
 
-      <button onClick={handleLogout} style={{ marginTop: '20px' }}>Cerrar Sesión</button>
+        <div className="dashboard-card token-card">
+          <h3>Token de Autenticación</h3>
+          <p>Este token se envía automáticamente en cada petición a la API.</p>
+          <div className="token-display">
+            <code>{token}</code>
+            <button 
+              onClick={() => {
+                navigator.clipboard.writeText(token);
+                alert('Token copiado al portapapeles');
+              }}
+              className="copy-button"
+              title="Copiar token"
+            >
+              <i className="far fa-copy"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

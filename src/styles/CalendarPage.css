@@ -1,0 +1,564 @@
+/* Estilos base */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.calendar-page {
+  width: 100%;
+  height: 100vh;
+  background-color: #f8f9fa;
+  padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  border-bottom: 1px solid #e9ecef;
+  position: relative;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-header > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.page-header h1 {
+  color: #2d3748;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.back-button {
+  background-color: #f8f9fa;
+  color: #4a5568;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  height: fit-content;
+}
+
+.back-button:hover {
+  background-color: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+/* Filtros */
+.filters-container {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 0 0 2rem 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.filters-container h3 {
+  margin: 0 0 1rem 0;
+  color: #2d3748;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.filters-form {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  height: 40px;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+.filter-button {
+  background: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0 1.5rem;
+  height: 40px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.filter-button:hover {
+  background-color: #2c5282;
+}
+
+/* Contenedor del calendario */
+.calendar-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 1rem;
+  background: white;
+}
+
+/* Estilos para react-big-calendar */
+:global(.rbc-calendar) {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Encabezado del calendario */
+:global(.rbc-toolbar) {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+:global(.rbc-toolbar-label) {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  text-transform: capitalize;
+}
+
+/* Botones de navegación */
+:global(.rbc-btn-group) {
+  display: flex;
+  gap: 0.5rem;
+}
+
+:global(.rbc-btn) {
+  background: white;
+  border: 1px solid #e2e8f0;
+  color: #4a5568;
+  border-radius: 4px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+:global(.rbc-btn:hover) {
+  background-color: #edf2f7;
+  border-color: #cbd5e0;
+}
+
+:global(.rbc-active) {
+  background-color: #3182ce;
+  color: white;
+  border-color: #2c5282;
+}
+
+:global(.rbc-active:hover) {
+  background-color: #2c5282;
+  color: white;
+}
+
+/* Días de la semana */
+:global(.rbc-header) {
+  padding: 0.75rem;
+  text-align: center;
+  background: #f8f9fa;
+  color: #4a5568;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #e9ecef;
+}
+
+/* Celdas del calendario */
+:global(.rbc-month-view),
+:global(.rbc-time-view) {
+  flex: 1;
+  border: none;
+}
+
+:global(.rbc-month-row) {
+  min-height: 100px;
+}
+
+:global(.rbc-day-bg + .rbc-day-bg) {
+  border-left: 1px solid #e9ecef;
+}
+
+:global(.rbc-off-range-bg) {
+  background: #f8f9fa;
+}
+
+:global(.rbc-today) {
+  background-color: #f0f7ff;
+}
+
+/* Eventos */
+:global(.rbc-event) {
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-size: 0.85rem;
+  border: none;
+  margin: 1px 2px;
+  cursor: pointer;
+}
+
+:global(.rbc-event-content) {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Filtros */
+.calendar-filters {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  color: #4a5568;
+  margin-bottom: 0.25rem;
+  font-weight: 500;
+}
+
+.form-input {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+.filter-button {
+  background: #3182ce;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  height: 40px;
+}
+
+.filter-button:hover {
+  background-color: #2c5282;
+}
+
+/* Encabezado del calendario */
+.calendar-header {
+  display: flex;
+  flex-direction: column;
+  padding: 0 2rem;
+  background: white;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 1rem;
+}
+
+.calendar-filters {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.month-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+/* Estilos para el DatePicker */
+:global(.react-datepicker__header) {
+  background: white;
+  border: none;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.month-year {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  min-width: 200px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+:global(.react-datepicker__day-names) {
+  display: flex;
+  background: #f8f9fa;
+  margin: 0;
+  padding: 0.75rem 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #4a5568;
+  border-bottom: 1px solid #e9ecef;
+}
+
+:global(.react-datepicker__day-name) {
+  flex: 1;
+  text-align: center;
+  color: #4a5568;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 0;
+}
+
+:global(.react-datepicker__month) {
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+}
+
+:global(.react-datepicker__week) {
+  display: flex;
+  flex: 1;
+  min-height: 100px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+:global(.react-datepicker__day) {
+  flex: 1;
+  padding: 0.5rem;
+  margin: 0;
+  border-right: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+  color: #2d3748;
+  position: relative;
+  min-height: 100%;
+  background: #fff;
+  overflow: hidden;
+  transition: background-color 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+:global(.react-datepicker__day--today) {
+  background-color: #f0f7ff;
+  font-weight: 600;
+  color: #3182ce;
+}
+
+:global(.react-datepicker__day--selected) {
+  background-color: #3182ce;
+  color: white;
+}
+
+:global(.react-datepicker__day--disabled) {
+  color: #cbd5e0;
+  background-color: #f8f9fa;
+}
+
+:global(.react-datepicker__day:last-child) {
+  border-right: none;
+}
+
+/* Estilos para los selectores de mes y año */
+:global(.react-datepicker__month-dropdown-container),
+:global(.react-datepicker__year-dropdown-container) {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+:global(.react-datepicker__month-select),
+:global(.react-datepicker__year-select) {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  color: #2d3748;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+:global(.react-datepicker__month-select):hover,
+:global(.react-datepicker__year-select):hover {
+  border-color: #cbd5e0;
+}
+
+:global(.react-datepicker__month-select):focus,
+:global(.react-datepicker__year-select):focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
+
+:global(.react-datepicker__day:not(.react-datepicker__day--disabled):not(.react-datepicker__day--selected):hover) {
+  background-color: #ebf8ff;
+  color: #2b6cb0;
+  cursor: pointer;
+}
+
+:global(.react-datepicker__day--selected) {
+  background-color: #3182ce;
+  color: white;
+  font-weight: 500;
+}
+
+:global(.react-datepicker__day--today) {
+  font-weight: 600;
+  color: #3182ce;
+}
+
+:global(.react-datepicker__day--disabled) {
+  color: #cbd5e0;
+  cursor: not-allowed;
+}
+
+/* Navegación del calendario */
+.calendar-header-custom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.month-year {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3748;
+  text-transform: capitalize;
+}
+
+.nav-arrow {
+  background: none;
+  border: none;
+  color: #4a5568;
+  font-size: 1.25rem;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nav-arrow:hover {
+  background-color: #edf2f7;
+  color: #2d3748;
+}
+
+.nav-arrow:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: none;
+}
+
+/* Selectores de mes y año */
+:global(.react-datepicker__month-dropdown-container),
+:global(.react-datepicker__year-dropdown-container) {
+  display: inline-block;
+  margin: 0 0.5rem;
+}
+
+:global(.react-datepicker__month-select),
+:global(.react-datepicker__year-select) {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  color: #2d3748;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+:global(.react-datepicker__month-select):hover,
+:global(.react-datepicker__year-select):hover {
+  border-color: #cbd5e0;
+}
+
+:global(.react-datepicker__month-select):focus,
+:global(.react-datepicker__year-select):focus {
+  outline: none;
+  border-color: #3182ce;
+  box-shadow: 0 0 0 2px rgba(49, 130, 206, 0.2);
+}
