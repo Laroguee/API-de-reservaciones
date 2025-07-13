@@ -1,4 +1,24 @@
-/* Estilos para el overlay del modal */
+/**
+ * ESTILOS PARA EL COMPONENTE DE FORMULARIO DE ALOJAMIENTO
+ * 
+ * Este archivo contiene los estilos para el formulario de creación/edición
+ * de alojamientos, incluyendo validaciones y vista previa de imagen.
+ * 
+ * Estructura del componente:
+ * - Contenedor principal (modal-overlay)
+ * - Modal (modal-content)
+ * - Encabezado (modal-header)
+ * - Formulario (accommodation-form)
+ * - Grupos de campos (form-group)
+ * - Campos de formulario (input, textarea)
+ * - Mensajes de error (error-message)
+ * - Vista previa de imagen (image-preview)
+ * - Botones de acción (form-actions)
+ * - Estilos responsivos
+ */
+
+/* ========== ESTILOS BASE DEL MODAL ========== */
+/* Overlay oscuro detrás del modal */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -13,7 +33,7 @@
   backdrop-filter: blur(5px);
 }
 
-/* Contenido del modal */
+/* Contenedor principal del modal */
 .modal-content {
   background: white;
   padding: 2rem;
@@ -37,7 +57,8 @@
   }
 }
 
-/* Encabezado del modal */
+/* ========== ENCABEZADO DEL MODAL ========== */
+/* Contenedor del encabezado con título y botón de cierre */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -69,7 +90,8 @@
   color: #ef4444;
 }
 
-/* Estilos del formulario */
+/* ========== FORMULARIO ========== */
+/* Contenedor principal del formulario */
 .accommodation-form {
   display: flex;
   flex-direction: column;
@@ -77,11 +99,13 @@
   padding: 1.5rem 2rem 2rem;
 }
 
+/* Grupo de campos del formulario */
 .form-group {
   margin-bottom: 1.75rem;
   position: relative;
 }
 
+/* Estilos para las etiquetas de los campos */
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
@@ -95,6 +119,8 @@
   opacity: 0.8;
 }
 
+/* ========== CAMPOS DE FORMULARIO ========== */
+/* Estilos base para todos los campos de entrada */
 .form-group input[type="text"],
 .form-group input[type="url"],
 .form-group textarea {
@@ -108,6 +134,7 @@
   color: #ffffff;
 }
 
+/* Estilos para campos con error */
 .form-group input[type="text"].error,
 .form-group input[type="url"].error,
 .form-group textarea.error {
@@ -140,6 +167,8 @@
   line-height: 1.6;
 }
 
+/* ========== MENSAJES DE ERROR ========== */
+/* Estilos para mensajes de validación */
 .error-message {
   display: block;
   margin-top: 0.5rem;
@@ -154,7 +183,8 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Vista previa de la imagen */
+/* ========== VISTA PREVIA DE IMAGEN ========== */
+/* Contenedor de la vista previa */
 .image-preview {
   margin-top: 1rem;
   border-radius: 0.375rem;
@@ -177,7 +207,8 @@
   display: block;
 }
 
-/* Botones del formulario */
+/* ========== ACCIONES DEL FORMULARIO ========== */
+/* Contenedor de botones */
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -229,7 +260,8 @@
   transform: translateY(1px);
 }
 
-/* Responsive */
+/* ========== MEDIA QUERIES ========== */
+/* Estilos para pantallas pequeñas (móviles) */
 @media (max-width: 640px) {
   .modal-content {
     width: 95%;

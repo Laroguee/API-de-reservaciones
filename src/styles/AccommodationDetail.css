@@ -1,4 +1,22 @@
-/* Estilos para el modal de detalles */
+/**
+ * ESTILOS PARA EL COMPONENTE DE DETALLE ALOJAMIENTO
+ * 
+ * Este archivo contiene los estilos para el modal que muestra los detalles completos
+ * de un alojamiento, incluyendo imagen, información básica y comodidades.
+ * 
+ * Estructura del componente:
+ * - Contenedor principal (modal-overlay)
+ * - Modal (detail-modal)
+ * - Encabezado (modal-header)
+ * - Contenido (detail-container)
+ * - Imagen (detail-image)
+ * - Información (detail-info)
+ * - Secciones de información (info-section)
+ * - Comodidades (amenities-grid)
+ * - Botones de acción (detail-actions)
+ */
+
+/* ========== ESTILOS BASE DEL MODAL ========== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -13,6 +31,7 @@
   padding: 1rem;
 }
 
+/* Contenedor principal del modal */
 .detail-modal {
   max-width: 900px;
   width: 90%;
@@ -29,6 +48,7 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ========== ENCABEZADO DEL MODAL ========== */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -90,6 +110,8 @@
   gap: 1.5rem;
 }
 
+/* ========== SECCIONES DE INFORMACIÓN ========== */
+/* Estilo base para secciones de información */
 .info-section {
   background: #f8fafc;
   padding: 1.25rem;
@@ -97,6 +119,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+/* Títulos de sección */
 .info-section h3 {
   color: #1e293b;
   margin-bottom: 1rem;
@@ -115,6 +138,7 @@
   color: #334155;
 }
 
+/* Estilo para el texto de descripción */
 .description {
   background: white;
   padding: 1rem;
@@ -122,6 +146,8 @@
   border-left: 4px solid #3b82f6;
 }
 
+/* ========== SECCIÓN DE COMODIDADES ========== */
+/* Grid para mostrar las comodidades como etiquetas */
 .amenities-grid {
   display: flex;
   flex-wrap: wrap;
@@ -129,6 +155,7 @@
   margin-top: 0.75rem;
 }
 
+/* Estilo para cada etiqueta de comodidad */
 .amenity-tag {
   background: #e0f2fe;
   color: #0369a1;
@@ -138,6 +165,8 @@
   font-weight: 500;
 }
 
+/* ========== ACCIONES DEL MODAL ========== */
+/* Contenedor de botones de acción */
 .detail-actions {
   display: flex;
   justify-content: flex-end;
@@ -146,6 +175,7 @@
   margin-top: auto;
 }
 
+/* Estilo del botón de cierre */
 .close-detail-button {
   background: #3b82f6;
   color: white;
@@ -161,7 +191,8 @@
   background: #2563eb;
 }
 
-/* Responsive */
+/* ========== MEDIA QUERIES ========== */
+/* Estilos para pantallas medianas y grandes (tablets y escritorio) */
 @media (min-width: 768px) {
   .detail-container {
     flex-direction: row;
