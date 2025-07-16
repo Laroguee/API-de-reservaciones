@@ -1,6 +1,6 @@
-// src/context/AuthContext.jsx
+
 import React, { createContext, useState, useEffect } from 'react';
-// CORRECCIÓN: Apunta a LoginServices.js y no usa llaves
+
 import LoginService from '../services/LoginServices.js'; 
 
 export const AuthContext = createContext();

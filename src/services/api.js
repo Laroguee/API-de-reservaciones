@@ -1,8 +1,8 @@
-// src/services/api.js
+
 import axios from 'axios';
 
 const apiClient = axios.create({
-  // La baseURL DEBE terminar aquí, en /api
+  
   baseURL: 'https://apibookingsaccomodations-production.up.railway.app/api',
   headers: {
     'Content-Type': 'application/json',
