@@ -8,20 +8,15 @@ const login = async (email, password) => {
       password,
     });
     
-   
     if (response.data.token && response.data.user) {
       
-      
-     
       const userEmail = response.data.user;
 
-      
       const userObject = {
         email: userEmail,
         name: userEmail.split('@')[0] 
       };
 
-     
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('user', JSON.stringify(userObject));
       
@@ -29,7 +24,9 @@ const login = async (email, password) => {
     
     return response.data;
   } catch (error) {
-    console.error('Error en el inicio de sesión:', error.response?.data || error.message);
+    
+    console.log('Ocurrió un error durante el inicio de sesión:', error.response?.data || error.message);
+    
     throw error.response?.data || new Error('Error en el inicio de sesión');
   }
 };
