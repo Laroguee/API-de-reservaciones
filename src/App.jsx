@@ -8,6 +8,8 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import { AccommodationProvider } from './context/AccommodationContext';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import ReservationsPage from './pages/ReservationsPage';
+
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/accommodations" element={<AccommodationsPage />} />
               <Route path="/calendar" element={<CalendarPage />} />
+              <Route path="/reservaciones" element={<ReservationsPage />} />
               
               {/* Redirigir cualquier ruta no coincidente a /dashboard */}
               <Route path="*" element={<Navigate to="/dashboard" replace />} />

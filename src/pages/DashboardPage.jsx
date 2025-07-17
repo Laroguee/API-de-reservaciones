@@ -45,6 +45,12 @@ const DashboardPage = () => {
             <i className="fas fa-calendar-alt"></i>
             <span>Ver Calendario de Reservas</span>
           </Link>
+
+          <Link to="/reservaciones" className="action-button tertiary">
+            <i className="fas fa-book"></i>
+            <span>Ver Reservaciones</span>
+          </Link>
+
         </div>
         
         <div className="dashboard-card">
