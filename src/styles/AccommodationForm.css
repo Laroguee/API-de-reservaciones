@@ -1,0 +1,279 @@
+/**
+ * ESTILOS PARA EL COMPONENTE DE FORMULARIO DE ALOJAMIENTO
+ * 
+ * Este archivo contiene los estilos para el formulario de creación/edición
+ * de alojamientos, incluyendo validaciones y vista previa de imagen.
+ * 
+ * Estructura del componente:
+ * - Contenedor principal (modal-overlay)
+ * - Modal (modal-content)
+ * - Encabezado (modal-header)
+ * - Formulario (accommodation-form)
+ * - Grupos de campos (form-group)
+ * - Campos de formulario (input, textarea)
+ * - Mensajes de error (error-message)
+ * - Vista previa de imagen (image-preview)
+ * - Botones de acción (form-actions)
+ * - Estilos responsivos
+ */
+
+/* ========== ESTILOS BASE DEL MODAL ========== */
+/* Overlay oscuro detrás del modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+/* Contenedor principal del modal */
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ========== ENCABEZADO DEL MODAL ========== */
+/* Contenedor del encabezado con título y botón de cierre */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.2s;
+  line-height: 1;
+  padding: 0.5rem;
+}
+
+.close-button:hover {
+  color: #ef4444;
+}
+
+/* ========== FORMULARIO ========== */
+/* Contenedor principal del formulario */
+.accommodation-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: 1.5rem 2rem 2rem;
+}
+
+/* Grupo de campos del formulario */
+.form-group {
+  margin-bottom: 1.75rem;
+  position: relative;
+}
+
+/* Estilos para las etiquetas de los campos */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #374151;
+}
+
+.form-group label::after {
+  content: ' *';
+  color: #ef4444;
+  opacity: 0.8;
+}
+
+/* ========== CAMPOS DE FORMULARIO ========== */
+/* Estilos base para todos los campos de entrada */
+.form-group input[type="text"],
+.form-group input[type="url"],
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #ffffff;
+}
+
+/* Estilos para campos con error */
+.form-group input[type="text"].error,
+.form-group input[type="url"].error,
+.form-group textarea.error {
+  border-color: #ef4444;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23ef4444' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25rem;
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="url"]:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.form-group input[type="text"].error:focus,
+.form-group input[type="url"].error:focus,
+.form-group textarea.error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+/* ========== MENSAJES DE ERROR ========== */
+/* Estilos para mensajes de validación */
+.error-message {
+  display: block;
+  margin-top: 0.5rem;
+  color: #ef4444;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== VISTA PREVIA DE IMAGEN ========== */
+/* Contenedor de la vista previa */
+.image-preview {
+  margin-top: 1rem;
+  border-radius: 0.375rem;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  transition: transform 0.2s ease;
+}
+
+.image-preview:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.image-preview img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ========== ACCIONES DEL FORMULARIO ========== */
+/* Contenedor de botones */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.cancel-button,
+.form-actions button {
+  padding: 0.875rem 1.75rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cancel-button {
+  background-color: #f9fafb;
+  color: #4b5563;
+  border: 1px solid #e5e7eb;
+}
+
+.cancel-button:hover {
+  background-color: #f3f4f6;
+  color: #1f2937;
+}
+
+.cancel-button:active {
+  background-color: #e5e7eb;
+}
+
+.submit-button {
+  background-color: #3b82f6;
+  color: white;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.submit-button:hover {
+  background-color: #2563eb;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.submit-button:active {
+  background-color: #1d4ed8;
+  transform: translateY(1px);
+}
+
+/* ========== MEDIA QUERIES ========== */
+/* Estilos para pantallas pequeñas (móviles) */
+@media (max-width: 640px) {
+  .modal-content {
+    width: 95%;
+    padding: 1.5rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .cancel-button,
+  .submit-button {
+    width: 100%;
+  }
+}
