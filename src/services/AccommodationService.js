@@ -17,9 +17,13 @@ const showError = (error) => {
   });
 };
 
-export const getAccommodationById = async (id) => {
+export const getAccommodationById = async (id, token) => {
   try {
-    const response = await apiClient.get(`${ACCOMMODATION_URL}/${id}`);
+    const response = await apiClient.get(`${BASE_URL}/accomodation/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data;
   } catch (error) {
     console.error('Error en getAccommodationById:', error);
@@ -28,9 +32,13 @@ export const getAccommodationById = async (id) => {
   }
 };
 
-export const getAccommodations = async () => {
+export const getAccommodations = async (token) => {
   try {
-    const response = await apiClient.get(ACCOMMODATIONS_URL);
+    const response = await apiClient.get(`${BASE_URL}/accomodations`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     // Filtrar para excluir alojamientos marcados como eliminados
     if (Array.isArray(response.data)) {
       return response.data.filter(accommodation => !accommodation.isDeleted);

@@ -26,10 +26,14 @@ export async function getBookings() {
   }
 }
 
-// Crear nueva reserva
-export async function createBooking(data) {
+// Crear nueva reserva - VERSIÓN CORREGIDA
+export async function createBooking(data, token) {
   try {
-    const response = await apiClient.post(`${BASE_URL}/booking`, data);
+    const response = await apiClient.post(`${BASE_URL}/booking`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data;
   } catch (error) {
     showError(error);
@@ -84,9 +88,13 @@ export async function getAccommodationById(id) {
 }
 
 // Obtener reservas por alojamiento
-export async function getBookingsForAccommodation(accommodationId) {
+export async function getBookingsForAccommodation(accommodationId, token) {
   try {
-    const response = await apiClient.get(`${BASE_URL}/reservations/accommodation/${accommodationId}`);
+    const response = await apiClient.get(`${BASE_URL}/reservations/accommodation/${accommodationId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     return response.data;
   } catch (error) {
     showError(error);
