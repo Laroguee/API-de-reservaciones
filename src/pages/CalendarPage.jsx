@@ -50,33 +50,48 @@ const CalendarPage = () => {
       try {
         // Mapear diferentes posibles nombres de campos de la API
         const id = reservation.id || reservation.reservacionId || index;
-        const guestName = reservation.nombreHuesped || 
+        
+        // 1. SOLUCIÓN PARA EL PROBLEMA DE NOMBRES:
+        // Acceso anidado a propiedades para huésped y alojamiento
+        const guestName = reservation.user?.name || 
+                         reservation.guest?.name || 
                          reservation.guestName || 
-                         reservation.huésped || 
-                         reservation.huesped || 
+                         reservation.nombreHuesped || 
                          'Sin nombre';
-        const accommodationName = reservation.nombreAlojamiento || 
-                                 reservation.alojamiento?.nombre || 
-                                 reservation.accommodation?.name || 
+        
+        const accommodationName = reservation.accommodation?.name || 
                                  reservation.accommodation?.nombreAlojamiento ||
-                                 reservation.accommodation?.nombre ||
+                                 reservation.nombreAlojamiento || 
                                  'Alojamiento desconocido';
         
-        // Manejar fechas con moment para mejor parsing
-        let startDate = reservation.fechaInicio || reservation.startDate || reservation.inicio;
-        let endDate = reservation.fechaFin || reservation.endDate || reservation.fin;
+        // 2. SOLUCIÓN PARA EL PROBLEMA DE FECHAS:
+        // Usar campos específicos de la API (check_in_date/check_out_date)
+        let startDate = reservation.check_in_date || 
+                       reservation.startDate || 
+                       reservation.fechaInicio;
         
-        // Convertir fechas usando moment
+        let endDate = reservation.check_out_date || 
+                     reservation.endDate || 
+                     reservation.fechaFin;
+        
+        // Convertir fechas usando moment con formato específico
         const parseDate = (dateStr) => {
           if (!dateStr) return null;
-          const parsed = moment(dateStr);
-          return parsed.isValid() ? parsed.toDate() : null;
+          
+          // Especificar formato esperado para evitar problemas de interpretación
+          const parsed = moment(dateStr, 'YYYY-MM-DD');
+          
+          if (!parsed.isValid()) {
+            console.warn('Fecha inválida:', dateStr);
+            return null;
+          }
+          return parsed.toDate();
         };
         
         startDate = parseDate(startDate);
         endDate = parseDate(endDate);
         
-        // Validar fechas
+        // Validar fechas con fallback robusto
         if (!startDate) {
           console.warn('Fecha de inicio inválida para reservación:', reservation);
           startDate = new Date();
@@ -87,7 +102,7 @@ const CalendarPage = () => {
         }
         
         // Normalizar estado
-        let status = reservation.estado || reservation.status || 'PENDIENTE';
+        let status = reservation.status || reservation.estado || 'PENDIENTE';
         status = status.toString().toUpperCase();
         
         // Mapear posibles valores de estado
@@ -103,8 +118,9 @@ const CalendarPage = () => {
           status,
           guestName,
           accommodationName,
-          startDate: reservation.fechaInicio || reservation.startDate,
-          endDate: reservation.fechaFin || reservation.endDate,
+          // Guardar las fechas originales para mostrar en detalles
+          startDate: reservation.check_in_date || reservation.startDate,
+          endDate: reservation.check_out_date || reservation.endDate,
           originalData: reservation
         };
 
@@ -370,10 +386,15 @@ const CalendarPage = () => {
     setIsSaving(true);
     
     try {
+      // 1. SOLUCIÓN PARA VALIDACIÓN DE FECHAS:
+      // Formatear fechas en formato ISO sin hora
+      const startDateISO = moment(newReservation.startDate).format('YYYY-MM-DD');
+      const endDateISO = moment(newReservation.endDate).format('YYYY-MM-DD');
+      
       const payload = {
         guestName: newReservation.guestName.trim(),
-        startDate: moment(newReservation.startDate).format('YYYY-MM-DD'),
-        endDate: moment(newReservation.endDate).format('YYYY-MM-DD'),
+        startDate: startDateISO,
+        endDate: endDateISO,
         accommodationId: newReservation.accommodationId
       };
       
@@ -383,8 +404,27 @@ const CalendarPage = () => {
       const result = await createBooking(payload, token);
       console.log('✅ Reserva creada exitosamente:', result);
       
-      // *** CLAVE: REFETCH INMEDIATO ****
-      console.log('🔄 Recargando reservaciones...');
+      // 3. SOLUCIÓN PARA MOSTRAR RESERVA INMEDIATAMENTE:
+      // Estrategia dual: actualización optimista + refetch para consistencia
+      
+      // A. Actualización optimista con datos locales
+      const accommodation = accommodations.find(a => a.id === newReservation.accommodationId);
+      const tempEvent = {
+        id: `temp-${Date.now()}`,
+        title: `${newReservation.guestName} | ${accommodation?.name || 'Nuevo alojamiento'}`,
+        start: new Date(newReservation.startDate),
+        end: new Date(newReservation.endDate),
+        status: 'PENDIENTE',
+        guestName: newReservation.guestName,
+        accommodationName: accommodation?.name || 'Nuevo alojamiento',
+        startDate: startDateISO,
+        endDate: endDateISO,
+        originalData: { ...payload, id: `temp-${Date.now()}` }
+      };
+      
+      setEvents(prevEvents => [...prevEvents, tempEvent]);
+      
+      // B. Refetch para obtener datos reales del servidor
       await fetchReservations();
       
       // Mostrar mensaje de éxito
@@ -411,6 +451,9 @@ const CalendarPage = () => {
       
     } catch (err) {
       console.error('❌ Error completo al crear la reserva:', err);
+      
+      // Revertir actualización optimista en caso de error
+      setEvents(prevEvents => prevEvents.filter(e => !e.id.includes('temp')));
       
       let errorMessage = 'Error al crear la reserva';
       
@@ -468,7 +511,7 @@ const CalendarPage = () => {
 
   return (
     <div className="calendar-page">
-      <div className="calendar-header">
+     <div className="calendar-header">
         <h1>{monthYear}</h1>
         
         <div className="filters-container">
